@@ -21,7 +21,7 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
   const [endDate, setEndDate] = useState<Date>(new Date());
 
   useEffect(() => {
-    // Calculate the end date based on the startOfWeek
+    // Calculating end dataa
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(endOfWeek.getDate() + 6);
     setEndDate(endOfWeek);
@@ -73,7 +73,8 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
           <img className='h-12 w-12' src='./btn-right.png' />
         </button>
       </div>
-      <table className="w-11/12 mx-auto min-w-[770px] overflow-x-scroll table-fixed">
+      <div className=' overflow-x-auto'>
+      <table className="md:w-11/12 w-full mx-auto min-w-[770px] overflow-x-scroll table-fixed">
         <thead className=''>
           <tr className=''>
             <th></th>
@@ -85,7 +86,7 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
                   key={day}
                   className={clsx(
                     'text-center text-base font-medium px-4 py-2 border',
-                    day === currentDay ? ' text-my-grey bg-slate-50' : ' text-my-grey bg-white shadow-md'
+                  ' text-my-grey bg-white shadow-md'
                   )}
                 >
                   <div>{days[day]}</div>
@@ -105,7 +106,7 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
               {Array.from({ length: 7 }).map((_, day) => {
                 const date = new Date(startOfWeek);
                 date.setDate(date.getDate() + day);
-                const dateString = date.toISOString().split('T')[0]; // Format as "YYYY-MM-DD"
+                const dateString = date.toISOString().split('T')[0];
 
                 const currentTasks = sampleData.filter(
                   (task) => task.date === dateString && task.startHour <= hour && task.endHour > hour
@@ -116,7 +117,7 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
                     {currentTasks.map((currentTask) => (
                       <div
                         key={`${currentTask.title}-${currentTask.startHour}`}
-                        className={`text-sm rounded-md font-serif text-center absolute w-full flex items-center bg-cyan-300  text-black justify-center cursor-pointer p-1`}
+                        className={`text-sm md:text-xs rounded-md font-serif text-center absolute w-full flex items-center bg-cyan-300  text-black justify-center cursor-pointer p-1`}
                         style={{
                           top: `${(currentTask.startHour - hour) * 50 + 5}px`,
                           height: `${(currentTask.endHour - currentTask.startHour) * 50 - 10}px`,
@@ -135,6 +136,7 @@ const WeekView: React.FC<{ sampleData: Task[] }> = ({ sampleData }) => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };
